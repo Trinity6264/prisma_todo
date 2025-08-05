@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// The `User` model defines the structure of your users table.
+// Prisma will use this to create the table and provide you with
+// a type-safe way to query and manipulate data.
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  email     String   @unique
+  // It's a best practice to store a hashed password, not the plain text.
+  // The length of a password hash can vary, so VARCHAR(255) is a good, safe default.
+  password  String
+  createdAt DateTime @default(now())
+  // This field establishes a one-to-many relationship, linking a user to their to-do items.
+  todos     Todo[]
+  // This field now represents a one-to-one relationship with a RefreshToken.
+  // The `?` makes the refreshToken field optional, as a user might not have a token.
+  refreshToken RefreshToken?
+}
+
+// The `Todo` model represents a task or to-do item.
+// Each todo is linked to a specific user.
+model Todo {
+  id        Int      @id @default(autoincrement())
+  title     String
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  // This is the foreign key that links a Todo to a User.
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+// The `RefreshToken` model stores refresh tokens for user authentication.
+// Each refresh token is now linked to a single user in a one-to-one relationship.
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  // The `userId` is now marked as unique to enforce the one-to-one relationship.
+  userId    Int      @unique
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+}

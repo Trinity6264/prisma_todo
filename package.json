@@ -26,6 +26,7 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "@prisma/client": "^6.13.0"
+    "@prisma/client": "^6.13.0",
+    "express-validator": "^7.2.1"
   }
 }

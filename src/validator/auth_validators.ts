@@ -25,3 +25,9 @@ export const loginValidationRules = [
         .withMessage('Password must be at least 6 characters long'),
 
 ];
+
+export const refreshTokenValidationRules = [
+    body('token')
+        .notEmpty()
+        .withMessage('Refresh token is required'),
+];

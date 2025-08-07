@@ -7,6 +7,6 @@ const authRouter = Router();
 
 authRouter.post('/login', loginValidationRules, validateRequest, loginAuth);
 authRouter.post('/register', registerValidationRules, validateRequest, registerAuth);
-authRouter.post('/refresh', refreshTokenValidationRules, validateRequest, refreshToken);
+authRouter.post('/refresh-token', refreshTokenValidationRules, validateRequest, refreshToken);
 
 export default authRouter;

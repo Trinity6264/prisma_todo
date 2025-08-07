@@ -7,6 +7,7 @@ import morgan from "morgan";
 import authRouter from "./routes/auth_route";
 import notFound from "./middleware/not_found";
 import errorHandler from "./helper/error_handler";
+import todoRouter from "./routes/todo_route";
 
 config();
 
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/todos', todoRouter);
 
 app.use(notFound);
 app.use(errorHandler);

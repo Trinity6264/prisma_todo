@@ -1,4 +1,4 @@
-import AsyncWrapper from "../../helper/async_wrapper";
+import AsyncWrapper from "../helper/async_wrapper";
 import { Request, Response } from "express";
 
 

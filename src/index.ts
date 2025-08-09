@@ -25,6 +25,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/todos', todoRouter);
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.status(200).json({
+        status: 'success',
+        message: 'Server is healthy',
+        timestamp: new Date().toISOString(),
+    });
+});
+
 app.use(notFound);
 app.use(errorHandler);
 
@@ -39,6 +48,6 @@ app.use(errorHandler);
 //     });
 // });
 
-server.listen(3000, () => {
-    console.log("Server is running on http://localhost:3000");
+server.listen(process.env.PORT || 3000, () => {
+    console.log(`Server is running on http://localhost:${process.env.PORT || 3000}`);
 });

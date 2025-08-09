@@ -4,7 +4,12 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf ./src/generated/* && rm -rf lib/*",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "postinstall": "prisma generate",
+    "migrate": "./migrate.sh",
+    "db:migrate": "prisma migrate deploy && prisma generate"
   },
   "keywords": [],
   "author": "",

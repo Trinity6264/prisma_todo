@@ -1,0 +1,38 @@
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+lib/
+
+# Development files
+.git/
+.gitignore
+README.md
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment files (will be handled by Render)
+.env.local
+.env.development
+.env.test
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+
+# Coverage reports
+coverage/
+
+# ESLint cache
+.eslintcache

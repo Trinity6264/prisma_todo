@@ -64,7 +64,11 @@ const loginAuth = AsyncWrapper(async (req: Request, res: Response) => {
     res.status(200).json({
         message: "Login successful",
         status: "success",
-        data: { access_token: access_token, refresh_token: refresh_token },
+        data: { 
+            access_token: access_token, 
+            refresh_token: refresh_token,
+            expires_in: 30 * 60, // 30 minutes in seconds
+        },
     });
 });
 
@@ -168,7 +172,8 @@ const refreshToken = AsyncWrapper(async (req: Request, res: Response) => {
         status: "success",
         data: { 
             access_token: new_access_token, 
-            refresh_token: new_refresh_token 
+            refresh_token: new_refresh_token,
+            expires_in: 30 * 60 // 30 minutes in seconds
         },
     });
 });

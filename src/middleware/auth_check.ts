@@ -46,7 +46,7 @@ export const authCheck = async (req: Request, res: Response, next: NextFunction)
         if (error instanceof JsonWebTokenError) {
             return res.status(403).json({
                 status: false,
-                msg: error.message,
+                message: error.message,
                 data: {},
             });
         }

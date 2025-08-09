@@ -10,35 +10,35 @@ const errorHandler = (err: ErrorCallback, req: Request, res: Response, next: Nex
     if (err instanceof CustomError) {
         return res.status(err.statusCode).json({
             status: false,
-            msg: err.message,
+            message: err.message,
             data: {},
         });
     }
     if (err instanceof NotFoundError) {
         return res.status(err.statusCode).json({
             status: false,
-            msg: err.message,
+            message: err.message,
             data: {},
         });
     }
     if (err instanceof BadRequestError) {
         return res.status(err.statusCode).json({
             status: false,
-            msg: err.message,
+            message: err.message,
             data: {},
         });
     }
     if (err instanceof UnauthorizedError) {
         return res.status(err.statusCode).json({
             status: false,
-            msg: err.message,
+            message: err.message,
             data: {},
         });
     }
     
     return res.status(500).json({
         status: false,
-        msg: 'Internal server error',
+        message: 'Internal server error',
         data: {},
     });
 };

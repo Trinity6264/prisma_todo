@@ -98,7 +98,7 @@ const getTodoById = AsyncWrapper(async (req: Request, res: Response) => {
     const todo = await prismaDB.todo.findFirst({
         where: {
             id: todoId,
-            userId: userId, // Ensure user can only access their own todos
+            userId: userId,
         },
         select: {
             id: true,

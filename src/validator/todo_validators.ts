@@ -8,7 +8,7 @@ export const createTodoValidationRules = [
         .isLength({ min: 1, max: 255 })
         .withMessage('Title must be between 1 and 255 characters')
         .trim()
-        .escape(), // Sanitize HTML entities
+        .escape(),
 ];
 
 // Validation for updating a todo
@@ -46,7 +46,6 @@ export const toggleTodoValidationRules = [
 
 // Validation for query parameters (optional filters for getTodos)
 export const getTodosValidationRules = [
-    // Optional query parameters for filtering
     body('completed')
         .optional()
         .isBoolean()

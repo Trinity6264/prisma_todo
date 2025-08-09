@@ -7,11 +7,11 @@ RUN apk add --no-cache postgresql-client
 # Set working directory
 WORKDIR /app
 
-# Copy package files
+# Copy package files first for better Docker layer caching
 COPY package*.json ./
 COPY tsconfig.json ./
 
-# Install all dependencies (including dev dependencies for build)
+# Install dependencies using npm ci for faster, reliable builds
 RUN npm ci
 
 # Copy source code
@@ -24,7 +24,7 @@ RUN npx prisma generate
 RUN npm run build
 
 # Remove dev dependencies to reduce image size
-RUN npm ci --only=production && npm cache clean --force
+RUN npm prune --production && npm cache clean --force
 
 # Create non-root user for security
 RUN addgroup -g 1001 -S nodejs

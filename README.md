@@ -136,3 +136,22 @@ The app includes a production-ready Dockerfile with:
 - Non-root user for security
 - Health checks
 - Minimal Alpine Linux base image
+
+## 🔧 Troubleshooting
+
+### Render Deployment Issues
+
+**Problem: `npm ci` fails with "package-lock.json not found"**
+- **Solution**: Ensure `package-lock.json` is committed to your repository
+- Run `npm install` locally to generate the file
+- Commit and push the `package-lock.json` file
+
+**Problem: Database connection errors**
+- **Solution**: Check that `DATABASE_URL` environment variable is set correctly
+- Ensure the PostgreSQL database is created and connected in Render
+
+**Problem: Build timeouts**
+- **Solution**: The free tier has build time limits. Consider:
+  - Optimizing dependencies
+  - Using Docker layer caching
+  - Upgrading to a paid plan for faster builds

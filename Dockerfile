@@ -11,8 +11,8 @@ WORKDIR /app
 COPY package*.json ./
 COPY tsconfig.json ./
 
-# Install dependencies using npm ci for faster, reliable builds
-RUN npm ci
+# Install dependencies - use npm install if package-lock.json doesn't exist
+RUN npm install
 
 # Copy source code
 COPY . .

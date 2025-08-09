@@ -11,14 +11,14 @@ WORKDIR /app
 COPY package*.json ./
 COPY tsconfig.json ./
 
-# Install dependencies - use npm install if package-lock.json doesn't exist
+# Copy Prisma schema before installing dependencies (needed for postinstall script)
+COPY prisma/ ./prisma/
+
+# Install dependencies - this will run prisma generate via postinstall
 RUN npm install
 
-# Copy source code
+# Copy the rest of the source code
 COPY . .
-
-# Generate Prisma client
-RUN npx prisma generate
 
 # Build the TypeScript application
 RUN npm run build

@@ -1,5 +1,5 @@
 # Use Node.js 18 LTS as base image
-FROM node:18-alpine
+FROM node:18-alpine AS builder
 
 # Install necessary system dependencies
 RUN apk add --no-cache postgresql-client
@@ -14,7 +14,7 @@ COPY tsconfig.json ./
 # Copy Prisma schema before installing dependencies (needed for postinstall script)
 COPY prisma/ ./prisma/
 
-# Install dependencies - this will run prisma generate via postinstall
+# Install all dependencies (needed for build)
 RUN npm install
 
 # Copy the rest of the source code
@@ -23,8 +23,31 @@ COPY . .
 # Build the TypeScript application
 RUN npm run build
 
-# Remove dev dependencies to reduce image size
-RUN npm prune --production && npm cache clean --force
+# Production stage
+FROM node:18-alpine AS production
+
+# Install necessary system dependencies
+RUN apk add --no-cache postgresql-client
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+COPY tsconfig.json ./
+
+# Copy Prisma schema
+COPY prisma/ ./prisma/
+
+# Install only production dependencies
+RUN npm install --only=production && npm cache clean --force
+
+# Copy built application from builder stage
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/generated ./generated
+
+# Copy other necessary files
+COPY healthcheck.js ./
 
 # Create non-root user for security
 RUN addgroup -g 1001 -S nodejs
